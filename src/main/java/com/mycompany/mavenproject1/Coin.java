@@ -12,7 +12,7 @@ package com.mycompany.mavenproject1;
 
 
 public class Coin {
-    int idCoin;
+  
     int rectangleId;
     int coinNumber;
     double cx, cy;
@@ -26,6 +26,7 @@ public class Coin {
         this.idcoin = idcoin;
     }
 
+    
     public double getX() {
         return cx;
     }
@@ -33,6 +34,39 @@ public class Coin {
     public double getY() {
         return cy;
     }
+
+    public int getIdcoin() {
+        return idcoin;
+    }
+    
+    // --------------------------------------------------------------------------------
+    // Fonction pour creer les coins
+
+  /*  public static Coin[] creationCoins() {
+        System.out.println("Creation du batiment");
+        System.out.println("Creation des coins");
+        System.out.println(
+                "Veuillez entrer les coordonnees des coins du batiment avec le format suivant : idCoin;cx;cy. Entrez 'fin' pour terminer.");
+
+        String entree = Lire.S();
+        Coin[] coins = new Coin[100];
+        while (!entree.equals("fin")) {
+            int idCoin = Integer.parseInt(entree.split(";")[0]);
+            double cx = Double.parseDouble(entree.split(";")[1]);
+            double cy = Double.parseDouble(entree.split(";")[2]);
+            Coin coin = new Coin(idcoin,rectangleId, coinNumber,  , cy);
+            coins[idCoin] = coin;
+            entree = Lire.S();
+        }
+
+        for (int i = 0; i < coins.length; i++) {
+            if (coins[i] != null) {
+                System.out.println(coins[i]);
+            }
+        }
+        System.out.println("");
+        return coins;
+    } */
 
     @Override
     public String toString() {

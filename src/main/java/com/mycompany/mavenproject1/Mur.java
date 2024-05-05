@@ -120,5 +120,19 @@ public class Mur {
     public String toString() {
         return "Mur{" + "idMur=" + idMur + ", rectangleId=" + rectangleId + ", murNumber=" + numero_mur + ", nbrePortes=" + nbrePortes + ", nbreFenetres=" + nbreFenetres + ", coinDebut=" + coinDebut + ", coinFin=" + coinFin + ", listeRevetement=" + listeRevetement + ", hauteur=" + hauteur + '}';
     }
+    public static double surface(int idMur, Niveau[] niveaux, Appartement[] appartements, Piece[] pieces, Mur[] murs,
+            int nbPortes, int nbFenetres) {
+        int idPieceMur = murs[idMur].rectangleId;
+        Coin coinDebut = murs[idMur].coinDebut;
+        Coin coinFin = murs[idMur].coinFin;
+        double hauteur = niveaux[appartements[pieces[idPieceMur].getIdAppartementPiece()].getIdNiveauAppartement()]
+                .getHauteurSousPlafond();
+        double longueur = Math.sqrt(
+                Math.pow(coinFin.getX() - coinDebut.getY(), 2) + Math.pow(coinFin.getY() - coinDebut.getY(), 2));
+        double surface = hauteur * longueur;
+        surface -= nbPortes * (0.90 * 2.10) + nbFenetres * (1.20 * 1.20);
+        return surface;
+    }
+    
 }
 
