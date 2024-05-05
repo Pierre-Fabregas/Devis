@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -348,14 +349,3 @@ PrintWriter pw;
     }
 }
 
-
-
-
-// Surface mur haut bas = hauteur plafond x largeur - nb porte - nb fenetre
-// Surface mur droite gauche = hauteur plafond x longueur - nb porte - nb fenetre
-// Surface Sol = longueur x largeur - tremis
-
-
-// prix mur haut bas = (prix m2)x(Surface) + prix porte + prix fenetre
-// prix mur droite gauche = (prix m2)x(Surface) + prix porte + prix fenetre
-// prix sol = (prix m2)xsurface + prix trémis

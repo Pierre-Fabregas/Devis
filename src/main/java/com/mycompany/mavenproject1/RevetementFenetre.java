@@ -8,8 +8,13 @@ package com.mycompany.mavenproject1;
  *
  * @author fabre
  */
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -24,13 +29,14 @@ public class RevetementFenetre extends Application {
     
     private Stage appStage;
     private int nombreRectangles;
- public List<Mur> liste_murs;
+    List<Mur> listeMurs;
     
     
     
     // Ajout du constructeur pour initialiser le nombre de rectangles
-    public RevetementFenetre(int nombreRectangles) {
+    public RevetementFenetre(int nombreRectangles, List<Mur> listeMurs) {
         this.nombreRectangles = nombreRectangles;
+        this.listeMurs = listeMurs;
     }
 private int getSelectedValue(ComboBox<Integer> comboBox) {
     return comboBox.getValue();
@@ -59,14 +65,15 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
      }
       
       public Mur RetrouverMur( int rectangleId, int numero_mur){
-        for (Mur mur: liste_murs) {
+        for (Mur mur: listeMurs) {
             if (rectangleId == mur.getRectangleId() && numero_mur == mur.getNumero_mur()){
                 return mur;}
         }
     return null;
+    
       }
       
-      private void MajMur (int rectangleId, int numero_mur, int nbrePortes, int nbreFenetres, List<Revetement> listeRevetement, double hauteur){
+      private Mur MajMur (int rectangleId, int numero_mur, int nbrePortes, int nbreFenetres, int listeRevetement, double hauteur){
           Mur mur = RetrouverMur( rectangleId, numero_mur);
          // if ( mur=! null){    à remettre si on ajoute le null
               mur.setListeRevetement(listeRevetement);
@@ -74,7 +81,7 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
               mur.setNbreFenetres(nbreFenetres);
               mur.setHauteur(hauteur);
               System.out.println(mur.toString());
-              
+              return mur;
           }
         //  else {
         //      System.out.println("Aucun mur trouve");}
@@ -95,7 +102,7 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
     @Override
     public void start(Stage primaryStage) {
         appStage = primaryStage;
-        
+        ArrayList<Mur> liste_murs2 = new ArrayList<Mur>();
         int rectangleId;
 
         // Création du menu déroulant
@@ -154,7 +161,7 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
         Button saveButton6 = new Button("Enregistrer");
 saveButton6.setOnAction(event -> {
     saveTextField(saveButton6, A2Text, "Nombre de fenetres");
-   //  MajMur (rectangleId, 2, Integer.parseInt(A1Text.getText()),Integer.parseInt(A2Text.getText()) , Integer.parseInt(AComboBox.getValue()), Integer.parseInt(FText.getText()));
+    liste_murs2.add(MajMur (rectangleComboBox.getValue(), 2, Integer.parseInt(A1Text.getText()),Integer.parseInt(A2Text.getText()) , AComboBox.getValue(), Integer.parseInt(FText.getText())));
     
     
 
@@ -182,17 +189,37 @@ saveButton6.setOnAction(event -> {
         Button saveButton7 = new Button("Enregistrer");
         saveButton7.setOnAction(event -> {
              saveTextField(saveButton7, B2Text, "Nombre de fenetres");
+
+             liste_murs2.add(MajMur (rectangleComboBox.getValue(), 4, Integer.parseInt(B1Text.getText()),Integer.parseInt(B2Text.getText()) , BComboBox.getValue(), Integer.parseInt(FText.getText())));
         });
 
         Button saveButton8 = new Button("Enregistrer");
         saveButton8.setOnAction(event -> {
              saveTextField(saveButton8, C2Text, "Nombre de fenetres");
+             liste_murs2.add(MajMur (rectangleComboBox.getValue(), 1, Integer.parseInt(C1Text.getText()),Integer.parseInt(C2Text.getText()) , CComboBox.getValue(), Integer.parseInt(FText.getText())));
         });
 
         Button saveButton9 = new Button("Enregistrer");
         saveButton9.setOnAction(event -> {
             saveTextField(saveButton9, D2Text, "Nombre de fenetres");
+            liste_murs2.add(MajMur (rectangleComboBox.getValue(), 3, Integer.parseInt(D1Text.getText()),Integer.parseInt(D2Text.getText()) , DComboBox.getValue(), Integer.parseInt(FText.getText())));
+            PrintWriter pwmur;
+try { 
+    pwmur = new PrintWriter (new FileOutputStream("mur2.txt"));
+    for (Mur mur : liste_murs2) {
+        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
+    }
+    pwmur.close();
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+}
+
+            
+              
+
         });
+        
+        
 
         Button saveButton10 = new Button("Enregistrer");
         saveButton10.setOnAction(event -> {
@@ -298,7 +325,6 @@ saveButton6.setOnAction(event -> {
         launch(args);
     }
 }
-
 
 // Surface mur haut bas = hauteur plafond x largeur - nb porte - nb fenetre
 // Surface mur droite gauche = hauteur plafond x longueur - nb porte - nb fenetre

@@ -19,10 +19,10 @@ public class Mur {
     int nbreFenetres;
     Coin coinDebut;
     Coin coinFin;
-    List<Revetement> listeRevetement;
+    int listeRevetement;
     double hauteur; // Hauteur du mur
 
-    public Mur(int idMur, int rectangleId, int numero_mur, int nbrePortes, int nbreFenetres, Coin coinDebut, Coin coinFin, List<Revetement> listeRevetement, double hauteur) {
+    public Mur(int idMur, int rectangleId, int numero_mur, int nbrePortes, int nbreFenetres, Coin coinDebut, Coin coinFin, int listeRevetement, double hauteur) {
         this.idMur = idMur;
         this.rectangleId = rectangleId;
         this.numero_mur = numero_mur;
@@ -70,9 +70,8 @@ public class Mur {
         this.coinFin = coinFin;
     }
 
-    public void setListeRevetement(List<Revetement> listeRevetement) {
-        this.listeRevetement = listeRevetement;
-    }
+    public void setListeRevetement(int listeRevetement) {
+        this.listeRevetement = listeRevetement;}
 
     public void setHauteur(double hauteur) {
         this.hauteur = hauteur;
@@ -106,7 +105,7 @@ public class Mur {
         return coinFin;
     }
 
-    public List<Revetement> getListeRevetement() {
+    public int getListeRevetement() {
         return listeRevetement;
     }
 
