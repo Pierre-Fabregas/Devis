@@ -8,6 +8,7 @@ package com.mycompany.mavenproject1;
  *
  * @author fabre
  */
+import java.util.List;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -34,7 +35,9 @@ public class App extends Application {
     
     private Stage primaryStage;
     private int NombreRectangle;
-
+     List<Mur> listeMurs;
+    
+    
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -51,6 +54,7 @@ public class App extends Application {
     
 
     public void openMainWindow() {
+        listeMurs = new ArrayList<>();
         primaryStage.setTitle("Rectangles");
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
@@ -102,15 +106,19 @@ public class App extends Application {
     liste_coins.add(coin3);
     liste_coins.add(coin4);
     
-Mur mur1 = new Mur(liste_murs.size() + 1, rectangleId, 1, 0, 0, coin1, coin2, new ArrayList<>(), 0);
-Mur mur2 = new Mur(liste_murs.size() + 2, rectangleId, 2, 0, 0, coin2, coin3, new ArrayList<>(), 0);
-Mur mur3 = new Mur(liste_murs.size() + 3, rectangleId, 3, 0, 0, coin3, coin4, new ArrayList<>(), 0);
-Mur mur4 = new Mur(liste_murs.size() + 4, rectangleId, 4, 0, 0, coin4, coin1, new ArrayList<>(), 0);
+Mur mur1 = new Mur(liste_murs.size() + 1, rectangleId, 1, 0, 0, coin1, coin2, 0, 0);
+Mur mur2 = new Mur(liste_murs.size() + 2, rectangleId, 2, 0, 0, coin2, coin3, 0, 0);
+Mur mur3 = new Mur(liste_murs.size() + 3, rectangleId, 3, 0, 0, coin3, coin4, 0, 0);
+Mur mur4 = new Mur(liste_murs.size() + 4, rectangleId, 4, 0, 0, coin4, coin1, 0, 0);
 
 liste_murs.add(mur1);
 liste_murs.add(mur2);
 liste_murs.add(mur3);
 liste_murs.add(mur4);
+listeMurs.add(mur1);
+listeMurs.add(mur2);
+listeMurs.add(mur3);
+listeMurs.add(mur4);
 
     // Ajout du rectangle à la liste
     liste_recs.add(rec);
@@ -289,7 +297,8 @@ PrintWriter pw;
         pane.add(btRev, 4, 5);
         btRev.setOnAction(evt -> {
             // Ouvrir une nouvelle fenêtre pour choisir le revêtement
-            RevetementFenetre revetmentWindow = new RevetementFenetre(liste_recs.size());
+            RevetementFenetre revetmentWindow = new RevetementFenetre(liste_recs.size(), listeMurs);
+
             revetmentWindow.start(new Stage());
         });
 
