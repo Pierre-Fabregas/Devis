@@ -17,10 +17,10 @@ import javafx.stage.Stage;
 public class PremiereFenêtre extends Application {
 
     private Stage primaryStage;
-    private Main app;
+    private Main Main;
 
     public PremiereFenêtre(Main app) {
-        this.app = app;
+        this.Main = app;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class PremiereFenêtre extends Application {
             // Fermer la fenêtre actuelle
             primaryStage.close();
             // Ouvrir la fenêtre principale de la classe Main
-            app.openMainWindow();
+            Main.openMainWindow();
         });
         
        
