@@ -30,12 +30,12 @@ import javafx.scene.text.Text;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-public class App extends Application {
+public class Main extends Application {
   
    
     
     private Stage primaryStage;
-    private int NombreRectangle;
+    private int NombrePiece;
      List<Mur> listeMurs;
     
     
@@ -47,7 +47,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        Ajout addPieceWindow = new Ajout(this);
+        PremiereFenêtre addPieceWindow = new PremiereFenêtre(this);
         addPieceWindow.start(primaryStage);
        
     }
@@ -121,13 +121,13 @@ listeMurs.add(mur2);
 listeMurs.add(mur3);
 listeMurs.add(mur4);
 
-    // Ajout du rectangle à la liste
+    // PremiereFenêtre du rectangle à la liste
     liste_recs.add(rec);
     
 
     // Calcul et affichage de la surface
     surface.setText(Double.toString(rec.surface()));
-    System.out.println("Rectangle : " + lon.getText() + " x " + lar.getText() +
+    System.out.println("Piece : " + lon.getText() + " x " + lar.getText() +
             " (" + cx.getText() + "," + cy.getText() + ") ajouté à la liste");
 
         });
@@ -143,7 +143,7 @@ listeMurs.add(mur4);
         }
        
         pw.close();
-        System.out.println("Rectangles et coins sauvegardés dans le fichier rectangles.txt");
+        System.out.println("Pieces et coins sauvegardés dans le fichier rectangles.txt");
         } catch (FileNotFoundException e) {
         e.printStackTrace();
     }  
@@ -151,7 +151,7 @@ listeMurs.add(mur4);
     try { 
         pwcoin= new PrintWriter (new FileOutputStream("coin.txt"));
         for (Coin coin : liste_coins) {
-            pwcoin.println("Coin;" + coin.idcoin + ";" + coin.rectangleId + ";" + coin.coinNumber + ";" + coin.cx + ";" + coin.cy);
+            pwcoin.println("Coin;" + coin.idcoin + ";" + coin.IdPiececoin + ";" + coin.coinNumber + ";" + coin.cx + ";" + coin.cy);
         }
         pwcoin.close();
         } catch (FileNotFoundException e) {
@@ -161,7 +161,7 @@ listeMurs.add(mur4);
 try { 
     pwmur = new PrintWriter (new FileOutputStream("mur1.txt"));
     for (Mur mur : liste_murs) {
-        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
+        pwmur.println("Mur;" + mur.idMur + ";" + mur.IdpieceMur + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
     }
     pwmur.close();
 } catch (FileNotFoundException e) {
@@ -190,7 +190,7 @@ btAdd.setOnAction(evt -> {
     
     
     
-    // Ajout du rectangle à la liste
+    // PremiereFenêtre du rectangle à la liste
     liste_recs.add(rec);
     // Calcul et affichage de la surface
     surface.setText(Double.toString(rec.surface()));
@@ -242,7 +242,7 @@ Coin coin4 = new Coin (4,rec.getOri_x(), rec.getOri_y());
     
     
     
-    // Ajout du rectangle à la liste
+    // PremiereFenêtre du rectangle à la liste
     liste_recs.add(rec);
     liste_coins.add(coin1);
     liste_coins.add(coin2);
@@ -305,13 +305,13 @@ PrintWriter pw;
 
         Pane paneH = new Pane();
 
-        Button btShow = new Button("Dessiner rectangles");
+        Button btShow = new Button("Dessiner Pieces");
         pane.add(btShow, 3, 5);
         btShow.setOnAction(evt -> {
             // Dessiner les rectangles ici
             paneH.getChildren().clear(); // Effacer les anciens rectangles
             for (int i = 0; i < liste_recs.size(); i++) {
-                Text text = new Text("Rec " + (i + 1)); // Ajout du numéro
+                Text text = new Text("Rec " + (i + 1)); // PremiereFenêtre du numéro
                 StackPane stack = new StackPane();
                 Rectangle rectangle = new Rectangle();
                 rectangle.setX(liste_recs.get(i).getOri_x());
@@ -327,7 +327,7 @@ PrintWriter pw;
                 stack.setLayoutY(liste_recs.get(i).getOri_y());
 
                 paneH.getChildren().addAll(stack);
-                NombreRectangle=i+1;
+                NombrePiece=i+1;
             }
         });
 

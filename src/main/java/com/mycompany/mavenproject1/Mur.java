@@ -13,7 +13,7 @@ import java.util.List;
 public class Mur {
 
     int idMur;
-    int rectangleId; // Identifiant du rectangle auquel le mur appartient
+    int IdpieceMur; // Identifiant du rectangle auquel le mur appartient
     int numero_mur; // Numéro du mur dans le rectangle
     int nbrePortes;
     int nbreFenetres;
@@ -22,9 +22,9 @@ public class Mur {
     int listeRevetement;
     double hauteur; // Hauteur du mur
 
-    public Mur(int idMur, int rectangleId, int numero_mur, int nbrePortes, int nbreFenetres, Coin coinDebut, Coin coinFin, int listeRevetement, double hauteur) {
+    public Mur(int idMur, int IdpieceMur, int numero_mur, int nbrePortes, int nbreFenetres, Coin coinDebut, Coin coinFin, int listeRevetement, double hauteur) {
         this.idMur = idMur;
-        this.rectangleId = rectangleId;
+        this.IdpieceMur = IdpieceMur;
         this.numero_mur = numero_mur;
         this.nbrePortes = nbrePortes;
         this.nbreFenetres = nbreFenetres;
@@ -46,8 +46,8 @@ public class Mur {
         this.idMur = idMur;
     }
 
-    public void setRectangleId(int rectangleId) {
-        this.rectangleId = rectangleId;
+    public void setPieceId(int rectangleId) {
+        this.IdpieceMur = IdpieceMur;
     }
 
     public void setNumero_mur(int numero_mur) {
@@ -81,8 +81,8 @@ public class Mur {
         return idMur;
     }
 
-    public int getRectangleId() {
-        return rectangleId;
+    public int getIdpieceMur() {
+        return IdpieceMur;
     }
 
     public int getNumero_mur() {
@@ -117,11 +117,11 @@ public class Mur {
     
     @Override
     public String toString() {
-        return "Mur{" + "idMur=" + idMur + ", rectangleId=" + rectangleId + ", murNumber=" + numero_mur + ", nbrePortes=" + nbrePortes + ", nbreFenetres=" + nbreFenetres + ", coinDebut=" + coinDebut + ", coinFin=" + coinFin + ", listeRevetement=" + listeRevetement + ", hauteur=" + hauteur + '}';
+        return "Mur{" + "idMur=" + idMur + ", PieceId=" +IdpieceMur+ ", murNumber=" + numero_mur + ", nbrePortes=" + nbrePortes + ", nbreFenetres=" + nbreFenetres + ", coinDebut=" + coinDebut + ", coinFin=" + coinFin + ", listeRevetement=" + listeRevetement + ", hauteur=" + hauteur + '}';
     }
     public static double surface(int idMur, Niveau[] niveaux, Appartement[] appartements, Piece[] pieces, Mur[] murs,
             int nbPortes, int nbFenetres) {
-        int idPieceMur = murs[idMur].rectangleId;
+        int idPieceMur = murs[idMur].IdpieceMur;
         Coin coinDebut = murs[idMur].coinDebut;
         Coin coinFin = murs[idMur].coinFin;
         double hauteur = niveaux[appartements[pieces[idPieceMur].getIdAppartementPiece()].getIdNiveauAppartement()]

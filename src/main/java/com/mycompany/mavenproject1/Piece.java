@@ -10,7 +10,7 @@ package com.mycompany.mavenproject1;
  */
 
 public class Piece {
-    private int idPiece;
+    private int IdPiece;
     private int idAppartementPiece;
     private int sol;
     private int plafond;
@@ -29,7 +29,7 @@ public class Piece {
         if (listeM.endsWith(",")) {
             listeM = listeM.substring(0, listeM.length() - 1);
         }
-        return idPiece + ";" + sol + ";" + plafond + ";(" + listeM + ")";
+        return IdPiece + ";" + sol + ";" + plafond + ";(" + listeM + ")";
     }
 
     public static double surface(int idPiece, Niveau[] niveaux, Appartement[] appartements, Piece[] pieces, Mur[] murs,
@@ -72,8 +72,8 @@ public class Piece {
             String liste = entree.substring(entree.indexOf("(") + 1, entree.indexOf(")"));
             String[] listeMurString = liste.split(",");
             for (int i = 0; i < listeMurString.length; i++) {
-                murs[Integer.parseInt(listeMurString[i])].setRectangleId(idPiece);
-                System.out.println("idPieceMur: " + murs[Integer.parseInt(listeMurString[i])].getRectangleId());
+                murs[Integer.parseInt(listeMurString[i])].setPieceId(idPiece);
+                System.out.println("idPieceMur: " + murs[Integer.parseInt(listeMurString[i])].getIdpieceMur());
                 listeMur[Integer.parseInt(listeMurString[i])] = murs[Integer
                         .parseInt(listeMurString[i])];
             }
@@ -95,7 +95,7 @@ public class Piece {
     // Constructeur
 
     public Piece(int idPiece, int sol, int plafond, Mur[] listeMurs) {
-        this.idPiece = idPiece;
+        this.IdPiece = idPiece;
         this.sol = sol;
         this.plafond = plafond;
         this.listeMurs = listeMurs;
@@ -105,7 +105,7 @@ public class Piece {
     }
 
     public int getIdPiece() {
-        return idPiece;
+        return IdPiece;
     }
 
     public void setIdAppartementPiece(int idAppartementPiece) {

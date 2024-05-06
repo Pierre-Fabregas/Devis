@@ -66,7 +66,7 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
       
       public Mur RetrouverMur( int rectangleId, int numero_mur){
         for (Mur mur: listeMurs) {
-            if (rectangleId == mur.getRectangleId() && numero_mur == mur.getNumero_mur()){
+            if (rectangleId == mur.getIdpieceMur() && numero_mur == mur.getNumero_mur()){
                 return mur;}
         }
     return null;
@@ -207,7 +207,7 @@ saveButton6.setOnAction(event -> {
 try { 
     pwmur = new PrintWriter (new FileOutputStream("mur2.txt"));
     for (Mur mur : liste_murs2) {
-        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
+        pwmur.println("Mur;" + mur.idMur + ";" + mur.IdpieceMur + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
     }
     pwmur.close();
 } catch (FileNotFoundException e) {

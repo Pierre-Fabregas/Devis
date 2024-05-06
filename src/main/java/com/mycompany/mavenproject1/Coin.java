@@ -13,13 +13,13 @@ package com.mycompany.mavenproject1;
 
 public class Coin {
   
-    int rectangleId;
+    int IdPiececoin;
     int coinNumber;
     double cx, cy;
     int idcoin;
 
-    public Coin(int idcoin, int rectangleId, int coinNumber, double cx, double cy) {
-        this.rectangleId = rectangleId;
+    public Coin(int idcoin, int IdPiececoin, int coinNumber, double cx, double cy) {
+        this.IdPiececoin = IdPiececoin;
         this.coinNumber = coinNumber;
         this.cx = cx;
         this.cy = cy;
@@ -70,6 +70,6 @@ public class Coin {
 
     @Override
     public String toString() {
-        return "Coin{" + "idcoin" + idcoin + "rectangleId=" + rectangleId + ", coinNumber=" + coinNumber + ", cx=" + cx + ", cy=" + cy + '}';
+        return "Coin{" + "idcoin" + idcoin + "IdPiececoin=" + IdPiececoin + ", coinNumber=" + coinNumber + ", cx=" + cx + ", cy=" + cy + '}';
     }
 }

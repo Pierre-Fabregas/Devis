@@ -14,12 +14,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class Ajout extends Application {
+public class PremiereFenêtre extends Application {
 
     private Stage primaryStage;
-    private App app;
+    private Main app;
 
-    public Ajout(App app) {
+    public PremiereFenêtre(Main app) {
         this.app = app;
     }
 
@@ -30,7 +30,7 @@ public class Ajout extends Application {
         addButton.setOnAction(event -> {
             // Fermer la fenêtre actuelle
             primaryStage.close();
-            // Ouvrir la fenêtre principale de la classe App
+            // Ouvrir la fenêtre principale de la classe Main
             app.openMainWindow();
         });
         
