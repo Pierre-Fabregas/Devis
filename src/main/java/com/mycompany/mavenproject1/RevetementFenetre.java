@@ -30,13 +30,15 @@ public class RevetementFenetre extends Application {
     private Stage appStage;
     private int nombreRectangles;
     List<Mur> listeMurs;
+    List<Plafond> listePlafonds;
     
     
     
     // Ajout du constructeur pour initialiser le nombre de rectangles
-    public RevetementFenetre(int nombreRectangles, List<Mur> listeMurs) {
+    public RevetementFenetre(int nombreRectangles, List<Mur> listeMurs,List<Plafond> listePlafonds) {
         this.nombreRectangles = nombreRectangles;
         this.listeMurs = listeMurs;
+        this.listePlafonds = listePlafonds;
     }
 private int getSelectedValue(ComboBox<Integer> comboBox) {
     return comboBox.getValue();
@@ -73,6 +75,15 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
     
       }
       
+      public Plafond RetrouverPlafond( int rectangleId){
+        for (Plafond plafond: listePlafonds) {
+            if (rectangleId == plafond.getRectangleId() ){
+                return plafond;}
+        }
+    return null;
+    
+      }
+      
       private Mur MajMur (int rectangleId, int numero_mur, int nbrePortes, int nbreFenetres, int listeRevetement, double hauteur){
           Mur mur = RetrouverMur( rectangleId, numero_mur);
          // if ( mur=! null){    à remettre si on ajoute le null
@@ -87,6 +98,18 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
         //      System.out.println("Aucun mur trouve");}
     //  }
               
+      private Plafond MajPlafond (int rectangleId, int listeRevetement, int tremie){
+          Plafond plafond = RetrouverPlafond( rectangleId);
+         // if ( mur=! null){    à remettre si on ajoute le null
+              plafond.setListeRevetement(listeRevetement);
+              plafond.setTremie(tremie);
+              
+              System.out.println(plafond.toString());
+              return plafond;
+          }
+        //  else {
+        //      System.out.println("Aucun mur trouve");}
+    //  }
           
      
     private void saveTextField(Button saveButton, TextField textField, String label) {
@@ -103,6 +126,7 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
     public void start(Stage primaryStage) {
         appStage = primaryStage;
         ArrayList<Mur> liste_murs2 = new ArrayList<Mur>();
+        ArrayList<Plafond> liste_plafonds2 = new ArrayList<Plafond>();
         int rectangleId;
 
         // Création du menu déroulant
@@ -192,7 +216,7 @@ saveButton6.setOnAction(event -> {
 try { 
     pwmur = new PrintWriter (new FileOutputStream("mur2.txt"));
     for (Mur mur : liste_murs2) {
-        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
+        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.listeRevetement +";" + mur.hauteur);
     }
     pwmur.close();
 } catch (FileNotFoundException e) {
@@ -213,7 +237,18 @@ try {
         
         Button saveButton11 = new Button("Enregistrer");
         saveButton11.setOnAction(event -> {
-            // Ajouter ici la logique pour le revêtement sol
+           liste_plafonds2.add(MajPlafond (rectangleComboBox.getValue(), FComboBox.getValue(), Integer.parseInt(HText.getText())));
+             PrintWriter pwplafond;
+try { 
+    pwplafond = new PrintWriter (new FileOutputStream("plafond2.txt"));
+    for (Plafond plafond : liste_plafonds2) {
+        pwplafond.println("Plafond;" +  plafond.rectangleId + ";" + plafond.coin1.idcoin + ";" + plafond.coin2.idcoin + ";" + plafond.coin3.idcoin + ";" + plafond.coin4.idcoin + ";" + plafond.listeRevetement + ";" + plafond.tremie );
+    }
+    pwplafond.close();
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+}
+            
         });
         
    /*      Button saveButtonA= new Button("Enregistrer");
@@ -327,12 +362,3 @@ try {
         launch(args);
     }
 }
-
-// Surface mur haut bas = hauteur plafond x largeur - nb porte - nb fenetre
-// Surface mur droite gauche = hauteur plafond x longueur - nb porte - nb fenetre
-// Surface Sol = longueur x largeur - tremis
-
-
-// prix mur haut bas = (prix m2)x(Surface) + prix porte + prix fenetre
-// prix mur droite gauche = (prix m2)x(Surface) + prix porte + prix fenetre
-// prix sol = (prix m2)xsurface + prix trémis

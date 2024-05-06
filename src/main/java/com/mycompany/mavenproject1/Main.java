@@ -30,13 +30,14 @@ import javafx.scene.text.Text;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-public class Main extends Application {
+public class App extends Application {
   
    
     
     private Stage primaryStage;
     private int NombreRectangle;
      List<Mur> listeMurs;
+     List<Plafond> listePlafonds;
     
     
     public Stage getPrimaryStage() {
@@ -47,7 +48,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        PremiereFenêtre addPieceWindow = new PremiereFenêtre(this);
+        Ajout addPieceWindow = new Ajout(this);
         addPieceWindow.start(primaryStage);
        
     }
@@ -56,6 +57,7 @@ public class Main extends Application {
 
     public void openMainWindow() {
         listeMurs = new ArrayList<>();
+        listePlafonds = new ArrayList<>();
         primaryStage.setTitle("Rectangles");
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
@@ -107,7 +109,9 @@ public class Main extends Application {
     liste_coins.add(coin3);
     liste_coins.add(coin4);
     
-Plafond plafond1 = new Plafond(liste_murs.size()+1, rectangleId,coin1,coin2,coin3,coin4, 0);
+Plafond plafond1 = new Plafond(rectangleId,coin1,coin2,coin3,coin4, 0,0);
+liste_plafonds.add(plafond1);
+listePlafonds.add(plafond1);
     
 Mur mur1 = new Mur(liste_murs.size() + 1, rectangleId, 1, 0, 0, coin1, coin2, 0, 0);
 Mur mur2 = new Mur(liste_murs.size() + 2, rectangleId, 2, 0, 0, coin2, coin3, 0, 0);
@@ -163,9 +167,19 @@ listeMurs.add(mur4);
 try { 
     pwmur = new PrintWriter (new FileOutputStream("mur1.txt"));
     for (Mur mur : liste_murs) {
-        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idCoin + ";" + mur.coinFin.idCoin + ";" + mur.hauteur);
+        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
     }
     pwmur.close();
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+}
+    PrintWriter pwplafond;
+try { 
+    pwplafond = new PrintWriter (new FileOutputStream("plafond1.txt"));
+    for (Plafond plafond : liste_plafonds) {
+        pwplafond.println("Plafond;" +  plafond.rectangleId + ";" + plafond.coin1.idcoin + ";" + plafond.coin2.idcoin + ";" + plafond.coin3.idcoin + ";" + plafond.coin4.idcoin + ";" + plafond.listeRevetement + ";" + plafond.tremie );
+    }
+    pwplafond.close();
 } catch (FileNotFoundException e) {
     e.printStackTrace();
 }
@@ -300,7 +314,7 @@ PrintWriter pw;
         pane.add(btRev, 4, 5);
         btRev.setOnAction(evt -> {
             // Ouvrir une nouvelle fenêtre pour choisir le revêtement
-            RevetementFenetre revetmentWindow = new RevetementFenetre(liste_recs.size(), listeMurs);
+            RevetementFenetre revetmentWindow = new RevetementFenetre(liste_recs.size(), listeMurs, listePlafonds);
 
             revetmentWindow.start(new Stage());
         });
@@ -350,5 +364,17 @@ PrintWriter pw;
         launch(args);
     }
 }
+
+
+
+
+// Surface mur haut bas = hauteur plafond x largeur - nb porte - nb fenetre
+// Surface mur droite gauche = hauteur plafond x longueur - nb porte - nb fenetre
+// Surface Sol = longueur x largeur - tremis
+
+
+// prix mur haut bas = (prix m2)x(Surface) + prix porte + prix fenetre
+// prix mur droite gauche = (prix m2)x(Surface) + prix porte + prix fenetre
+// prix sol = (prix m2)xsurface + prix trémis
 
 
