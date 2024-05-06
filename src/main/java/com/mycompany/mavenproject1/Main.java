@@ -132,14 +132,14 @@ listeMurs.add(mur4);
 
         });
 
-        Button btSave = new Button("Sauvegarder rectangles");
+        Button btSave = new Button("Sauvegarder pieces");
         pane.add(btSave, 1, 5);
         btSave.setOnAction(evt -> {
         PrintWriter pw;
     try {
-        pw = new PrintWriter(new FileOutputStream("rectangles.txt"));
+        pw = new PrintWriter(new FileOutputStream("pieces.txt"));
         for (Rec rec : liste_recs) {
-            pw.println("Rectangle;" + rec.getLon() + ";" + rec.getLar() + ";" + rec.getOri_x() + ";" + rec.getOri_y() + ";" + rec.surface());
+            pw.println("Piece;" + rec.getLon() + ";" + rec.getLar() + ";" + rec.getOri_x() + ";" + rec.getOri_y() + ";" + rec.surface());
         }
        
         pw.close();
