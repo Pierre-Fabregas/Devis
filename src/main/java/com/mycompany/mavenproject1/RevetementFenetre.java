@@ -66,7 +66,7 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
       
       public Mur RetrouverMur( int rectangleId, int numero_mur){
         for (Mur mur: listeMurs) {
-            if (rectangleId == mur.getIdpieceMur() && numero_mur == mur.getNumero_mur()){
+            if (rectangleId == mur.getRectangleId() && numero_mur == mur.getNumero_mur()){
                 return mur;}
         }
     return null;
@@ -112,6 +112,8 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
         ComboBox<Integer> CComboBox = createComboBox();
         ComboBox<Integer> DComboBox = createComboBox();
         ComboBox<Integer> EComboBox = createComboBox();
+        ComboBox<Integer> FComboBox = createComboBox();
+        
         
         TextField A1Text = createTextField();
         TextField A2Text = createTextField();
@@ -122,17 +124,19 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
         TextField D1Text = createTextField();
         TextField D2Text = createTextField();
         TextField FText = createTextField();
+        TextField GText = createTextField();
+        TextField HText = createTextField();
         
         
        // Création des boutons "Enregistrer"
-        Button saveButtonRectangle = new Button("Enregistrer");
+      /*  Button saveButtonRectangle = new Button("Enregistrer");
         saveButtonRectangle.setOnAction(event -> {
             saveTextField(saveButtonRectangle, A1Text, "Nombre de portes");
           
-        });
+        });*/
         rectangleId= rectangleComboBox.getValue();
        
-        Button saveButton1 = new Button("Enregistrer");
+      /*  Button saveButton1 = new Button("Enregistrer");
         saveButton1.setOnAction(event -> {
             saveTextField(saveButton1, A1Text, "Nombre de portes");
         });
@@ -155,32 +159,13 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
         Button saveButton5 = new Button("Enregistrer");
         saveButton5.setOnAction(event -> {
             
-        });
+        });*/
         
    
         Button saveButton6 = new Button("Enregistrer");
 saveButton6.setOnAction(event -> {
     saveTextField(saveButton6, A2Text, "Nombre de fenetres");
     liste_murs2.add(MajMur (rectangleComboBox.getValue(), 2, Integer.parseInt(A1Text.getText()),Integer.parseInt(A2Text.getText()) , AComboBox.getValue(), Integer.parseInt(FText.getText())));
-    
-    
-
-    
-    
-
-  /*  int nbrePortesValue = Integer.parseInt(A1Text.getText());
-    int nbreFenetresValue = Integer.parseInt(A2Text.getText());
-    double longueurValue = rectangles[1][1];
-    double hauteurValue = Double.parseDouble(FText.getText());
-    double prix_revetementValue = AComboBox.getValue().doubleValue();*/
-
-  
-   
-   // Prix_mur(Integer.parseInt(A1Text.getText()), 
-   //      Integer.parseInt(A2Text.getText()), 
-   //      rectangles[1][1], 
-   //      Double.parseDouble(FText.getText()), 
-   //      AComboBox.getValue().doubleValue());
     
      
 });
@@ -207,7 +192,7 @@ saveButton6.setOnAction(event -> {
 try { 
     pwmur = new PrintWriter (new FileOutputStream("mur2.txt"));
     for (Mur mur : liste_murs2) {
-        pwmur.println("Mur;" + mur.idMur + ";" + mur.IdpieceMur + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
+        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
     }
     pwmur.close();
 } catch (FileNotFoundException e) {
@@ -226,7 +211,12 @@ try {
             // Ajouter ici la logique pour le revêtement sol
         });
         
-         Button saveButtonA= new Button("Enregistrer");
+        Button saveButton11 = new Button("Enregistrer");
+        saveButton11.setOnAction(event -> {
+            // Ajouter ici la logique pour le revêtement sol
+        });
+        
+   /*      Button saveButtonA= new Button("Enregistrer");
          saveButtonA.setOnAction(event -> {
            saveButtonAction(saveButtonA, AComboBox , "Revêtements mur intérieur droit:");
          
@@ -256,7 +246,7 @@ try {
         Button saveButtonF = new Button("Enregistrer");
         saveButtonF.setOnAction(event -> {
             saveTextField(saveButtonF, FText, "Hauteur plafond");
-        });
+        });*/
         
         Button FinButton = new Button("Fin");
         FinButton.setOnAction(event -> {
@@ -270,9 +260,9 @@ try {
         Text label4 = new Text("Revêtements mur intérieur bas:");
         Text label5 = new Text("Revêtements sol:");
         Text label6 = new Text("Hauteur plafond:");
-        
+        Text label7 = new Text("Revêtements plafond");
         // Création de la grille pour organiser les éléments
-        GridPane root = new GridPane();
+      /*  GridPane root = new GridPane();
         root.addRow(0, new Label("Rectangle:"), rectangleComboBox, saveButtonRectangle);
         root.addRow(1, label1, AComboBox,saveButtonA, new Label("Nombre de portes:"), A1Text ,saveButton1, new Label("Nombre de fenêtres:"), A2Text , saveButton6);
         root.addRow(2, label2, BComboBox,saveButtonB, new Label("Nombre de portes:"), B1Text ,saveButton2, new Label("Nombre de fenêtres:"), B2Text , saveButton7);
@@ -280,8 +270,20 @@ try {
         root.addRow(4, label4, DComboBox,saveButtonD, new Label("Nombre de portes:"), D1Text ,saveButton4, new Label("Nombre de fenêtres:"), D2Text , saveButton9);
         root.addRow(5, label5, EComboBox,saveButtonE);
         root.addRow(8,new Label(" "), new Label(" "),new Label(" "), label6, FText ,saveButtonF);
-        root.addRow(11,new Label(" "), new Label(" "),new Label(" "),new Label(" "),new Label(" "),new Label(" "), new Label(" "),new Label(" "),FinButton);
+        root.addRow(11,new Label(" "), new Label(" "),new Label(" "),new Label(" "),new Label(" "),new Label(" "), new Label(" "),new Label(" "),FinButton);*/
 
+               GridPane root = new GridPane();
+        root.addRow(0, new Label("Rectangle:"), rectangleComboBox);
+        root.addRow(1, label1, AComboBox, new Label("Nombre de portes:"), A1Text , new Label("Nombre de fenêtres:"), A2Text , saveButton6);
+        root.addRow(2, label2, BComboBox, new Label("Nombre de portes:"), B1Text , new Label("Nombre de fenêtres:"), B2Text , saveButton7);
+        root.addRow(3, label3, CComboBox, new Label("Nombre de portes:"), C1Text , new Label("Nombre de fenêtres:"), C2Text , saveButton8);
+        root.addRow(4, label4, DComboBox, new Label("Nombre de portes:"), D1Text , new Label("Nombre de fenêtres:"), D2Text , saveButton9);
+        root.addRow(5, label5, EComboBox, new Label("Nombre de trémie") , GText  , saveButton10);
+        root.addRow(6, label7, FComboBox, new Label("Nombre de trémie") , HText  , saveButton11);
+        root.addRow(8,new Label(" "), new Label(" "),new Label(" "), label6, FText );
+        root.addRow(11,new Label(" "), new Label(" "),new Label(" "),new Label(" "),new Label(" "),new Label(" "), new Label(" "),new Label(" "),FinButton);
+        
+        
         // Espacement et alignement des éléments
         root.setHgap(10);
         root.setVgap(10);
