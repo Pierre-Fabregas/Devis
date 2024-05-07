@@ -31,18 +31,22 @@ public class RevetementFenetre extends Application {
     private int nombreRectangles;
     List<Mur> listeMurs;
     List<Plafond> listePlafonds;
+    List<Sol> listeSols;
     
     
     
     // Ajout du constructeur pour initialiser le nombre de rectangles
-    public RevetementFenetre(int nombreRectangles, List<Mur> listeMurs,List<Plafond> listePlafonds) {
+    public RevetementFenetre(int nombreRectangles, List<Mur> listeMurs,List<Plafond> listePlafonds, List<Sol> listeSols) {
         this.nombreRectangles = nombreRectangles;
         this.listeMurs = listeMurs;
         this.listePlafonds = listePlafonds;
+        this.listeSols = listeSols;
     }
-private int getSelectedValue(ComboBox<Integer> comboBox) {
+    
+    
+    private int getSelectedValue(ComboBox<Integer> comboBox) {
     return comboBox.getValue();
-}
+    }
 
 
     private void saveButtonAction(Button saveButton, ComboBox<Integer> comboBox, String label) {
@@ -84,6 +88,16 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
     
       }
       
+      public Sol RetrouverSol( int rectangleId){
+        for (Sol sol: listeSols) {
+            if (rectangleId == sol.getRectangleId() ){
+                return sol;}
+        }
+    return null;
+    
+      }
+      
+      
       private Mur MajMur (int rectangleId, int numero_mur, int nbrePortes, int nbreFenetres, int listeRevetement, double hauteur){
           Mur mur = RetrouverMur( rectangleId, numero_mur);
          // if ( mur=! null){    à remettre si on ajoute le null
@@ -110,6 +124,20 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
         //  else {
         //      System.out.println("Aucun mur trouve");}
     //  }
+      
+      
+      private Sol MajSol (int rectangleId, int listeRevetement, int tremie){
+          Sol sol = RetrouverSol(rectangleId);
+         // if ( mur=! null){    à remettre si on ajoute le null
+              sol.setListeRevetement(listeRevetement);
+              sol.setTremie(tremie);
+              
+              System.out.println(sol.toString());
+              return sol;
+          }
+        //  else {
+        //      System.out.println("Aucun mur trouve");}
+    //  }
           
      
     private void saveTextField(Button saveButton, TextField textField, String label) {
@@ -127,6 +155,8 @@ private int getSelectedValue(ComboBox<Integer> comboBox) {
         appStage = primaryStage;
         ArrayList<Mur> liste_murs2 = new ArrayList<Mur>();
         ArrayList<Plafond> liste_plafonds2 = new ArrayList<Plafond>();
+        ArrayList<Sol> liste_sols2 = new ArrayList<Sol>();
+        ArrayList<Piece> liste_pieces = new ArrayList<Piece>();
         int rectangleId;
 
         // Création du menu déroulant
@@ -213,18 +243,15 @@ saveButton6.setOnAction(event -> {
             saveTextField(saveButton9, D2Text, "Nombre de fenetres");
             liste_murs2.add(MajMur (rectangleComboBox.getValue(), 3, Integer.parseInt(D1Text.getText()),Integer.parseInt(D2Text.getText()) , DComboBox.getValue(), Integer.parseInt(FText.getText())));
             PrintWriter pwmur;
-try { 
-    pwmur = new PrintWriter (new FileOutputStream("mur2.txt"));
-    for (Mur mur : liste_murs2) {
-        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.listeRevetement +";" + mur.hauteur);
-    }
-    pwmur.close();
-} catch (FileNotFoundException e) {
-    e.printStackTrace();
-}
-
-            
-              
+            try { 
+            pwmur = new PrintWriter (new FileOutputStream("mur2.txt"));
+            for (Mur mur : liste_murs2) {
+            pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.listeRevetement +";" + mur.hauteur);
+               }
+            pwmur.close();
+            } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            }
 
         });
         
@@ -232,7 +259,17 @@ try {
 
         Button saveButton10 = new Button("Enregistrer");
         saveButton10.setOnAction(event -> {
-            // Ajouter ici la logique pour le revêtement sol
+             liste_sols2.add(MajSol (rectangleComboBox.getValue(), EComboBox.getValue(), Integer.parseInt(GText.getText())));
+             PrintWriter pwsol;
+try { 
+    pwsol = new PrintWriter (new FileOutputStream("sol2.txt"));
+    for (Sol sol : liste_sols2) {
+        pwsol.println("Sol;" +  sol.rectangleId + ";" + sol.coin1.idcoin + ";" + sol.coin2.idcoin + ";" + sol.coin3.idcoin + ";" + sol.coin4.idcoin + ";" + sol.listeRevetement + ";" + sol.tremie );
+    }
+    pwsol.close();
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+}
         });
         
         Button saveButton11 = new Button("Enregistrer");
@@ -250,6 +287,102 @@ try {
 }
             
         });
+        
+Button saveButtonPiece = new Button("Enregistrer Piece");
+       saveButtonPiece.setOnAction(event -> {        
+/*Mur mur1 = null;
+Mur mur2 = null;
+Mur mur3 = null;
+Mur mur4 = null;
+
+for (Plafond plafond : liste_plafonds2) {
+    for (Sol sol : liste_sols2) {
+        for (Mur mur : liste_murs2) {
+            if (sol.getRectangleId() == mur.getRectangleId() && mur.getRectangleId() == plafond.getRectangleId() && plafond.getRectangleId()==sol.getRectangleId()) {
+                if (mur.getNumero_mur() == 1) {
+                    mur1 = mur;
+                }
+                if (mur.getNumero_mur() == 2) {
+                    mur2 = mur;
+                }
+                if (mur.getNumero_mur() == 3) {
+                    mur3 = mur;
+                }
+                if (mur.getNumero_mur() == 4) {
+                    mur4 = mur;
+                }
+                if (mur1 != null && mur2 != null && mur3 != null && mur4 != null) {
+                    Piece piece = new Piece(plafond.getRectangleId(), mur1, mur2, mur3, mur4, sol, plafond);
+                    liste_pieces.add(piece);
+                }
+            }
+        }
+        
+        PrintWriter pwpiece;
+try { 
+    pwpiece = new PrintWriter (new FileOutputStream("piece.txt"));
+    for (Piece piece : liste_pieces) {
+        pwpiece.println("Piece;" +  piece.rectangleId + ";" + piece.mur1 + ";" + piece.mur2 + ";" + piece.mur3 + ";" + piece.mur4 + ";" + piece.sol + ";" + piece.plafond );
+    }
+    pwpiece.close();
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+}
+        
+        
+    }
+}*/
+for (Plafond plafond : liste_plafonds2) {
+    for (Sol sol : liste_sols2) {
+        // Initialiser les murs
+        Mur mur1 = null;
+        Mur mur2 = null;
+        Mur mur3 = null;
+        Mur mur4 = null;
+        int murCount = 0;
+
+        // Parcourir les murs pour le rectangle courant
+        for (Mur mur : liste_murs2) {
+            if (mur.getRectangleId() == plafond.getRectangleId() && plafond.getRectangleId() == sol.getRectangleId()) {
+               
+                murCount++;
+                switch (mur.getNumero_mur()) {
+                    case 1:
+                        mur1 = mur;
+                        break;
+                    case 2:
+                        mur2 = mur;
+                        break;
+                    case 3:
+                        mur3 = mur;
+                        break;
+                    case 4:
+                        mur4 = mur;
+                        break;
+                }
+            }
+        }
+
+        // Vérifier si tous les murs ont été trouvés
+        if (murCount == 4) {
+            // Créer la pièce
+            Piece piece = new Piece(plafond.getRectangleId(), mur1, mur2, mur3, mur4, sol, plafond);
+            liste_pieces.add(piece);
+        }
+    }
+}
+PrintWriter pwpiece;
+try { 
+    pwpiece = new PrintWriter (new FileOutputStream("piece.txt"));
+    for (Piece piece : liste_pieces) {
+        pwpiece.println("Piece;" +  piece.rectangleId + ";" + piece.mur1 + ";" + piece.mur2 + ";" + piece.mur3 + ";" + piece.mur4 + ";" + piece.sol + ";" + piece.plafond );
+    }
+    pwpiece.close();
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+}
+
+});           
         
    /*      Button saveButtonA= new Button("Enregistrer");
          saveButtonA.setOnAction(event -> {
@@ -308,7 +441,7 @@ try {
         root.addRow(11,new Label(" "), new Label(" "),new Label(" "),new Label(" "),new Label(" "),new Label(" "), new Label(" "),new Label(" "),FinButton);*/
 
                GridPane root = new GridPane();
-        root.addRow(0, new Label("Rectangle:"), rectangleComboBox);
+        root.addRow(0, new Label("Rectangle:"), rectangleComboBox, saveButtonPiece);
         root.addRow(1, label1, AComboBox, new Label("Nombre de portes:"), A1Text , new Label("Nombre de fenêtres:"), A2Text , saveButton6);
         root.addRow(2, label2, BComboBox, new Label("Nombre de portes:"), B1Text , new Label("Nombre de fenêtres:"), B2Text , saveButton7);
         root.addRow(3, label3, CComboBox, new Label("Nombre de portes:"), C1Text , new Label("Nombre de fenêtres:"), C2Text , saveButton8);
@@ -362,3 +495,13 @@ try {
         launch(args);
     }
 }
+
+
+// Surface mur haut bas = hauteur plafond x largeur - nb porte - nb fenetre
+// Surface mur droite gauche = hauteur plafond x longueur - nb porte - nb fenetre
+// Surface Sol = longueur x largeur - tremis
+
+
+// prix mur haut bas = (prix m2)x(Surface) + prix porte + prix fenetre
+// prix mur droite gauche = (prix m2)x(Surface) + prix porte + prix fenetre
+// prix sol = (prix m2)xsurface + prix trémis
