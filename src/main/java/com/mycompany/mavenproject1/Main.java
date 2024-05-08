@@ -30,7 +30,7 @@ import javafx.scene.text.Text;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-public class App extends Application {
+public class Main extends Application {
   
    
     
@@ -38,6 +38,7 @@ public class App extends Application {
     private int NombreRectangle;
      List<Mur> listeMurs;
      List<Plafond> listePlafonds;
+     List<Sol> listeSols;
     
     
     public Stage getPrimaryStage() {
@@ -48,7 +49,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        Ajout addPieceWindow = new Ajout(this);
+        PremiereFenêtre addPieceWindow = new PremiereFenêtre(this);
         addPieceWindow.start(primaryStage);
        
     }
@@ -58,6 +59,7 @@ public class App extends Application {
     public void openMainWindow() {
         listeMurs = new ArrayList<>();
         listePlafonds = new ArrayList<>();
+        listeSols = new ArrayList<>();
         primaryStage.setTitle("Rectangles");
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
@@ -88,6 +90,7 @@ public class App extends Application {
         ArrayList<Coin> liste_coins = new ArrayList<Coin>();
         ArrayList<Mur> liste_murs = new ArrayList<Mur>();
         ArrayList<Plafond> liste_plafonds = new ArrayList<Plafond>();
+        ArrayList<Sol> liste_sols = new ArrayList<Sol>();
         
         Button btAdd = new Button("Ajouter rectangle");
         pane.add(btAdd, 0, 5);
@@ -112,6 +115,10 @@ public class App extends Application {
 Plafond plafond1 = new Plafond(rectangleId,coin1,coin2,coin3,coin4, 0,0);
 liste_plafonds.add(plafond1);
 listePlafonds.add(plafond1);
+
+Sol sol1 = new Sol(rectangleId,coin1,coin2,coin3,coin4, 0,0);
+liste_sols.add(sol1);
+listeSols.add(sol1);
     
 Mur mur1 = new Mur(liste_murs.size() + 1, rectangleId, 1, 0, 0, coin1, coin2, 0, 0);
 Mur mur2 = new Mur(liste_murs.size() + 2, rectangleId, 2, 0, 0, coin2, coin3, 0, 0);
@@ -180,6 +187,17 @@ try {
         pwplafond.println("Plafond;" +  plafond.rectangleId + ";" + plafond.coin1.idcoin + ";" + plafond.coin2.idcoin + ";" + plafond.coin3.idcoin + ";" + plafond.coin4.idcoin + ";" + plafond.listeRevetement + ";" + plafond.tremie );
     }
     pwplafond.close();
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+}
+
+PrintWriter pwsol;
+try { 
+    pwsol = new PrintWriter (new FileOutputStream("sol1.txt"));
+    for (Sol sol : liste_sols) {
+        pwsol.println("Sol;" +  sol.rectangleId + ";" + sol.coin1.idcoin + ";" + sol.coin2.idcoin + ";" + sol.coin3.idcoin + ";" + sol.coin4.idcoin + ";" + sol.listeRevetement + ";" + sol.tremie );
+    }
+    pwsol.close();
 } catch (FileNotFoundException e) {
     e.printStackTrace();
 }
@@ -307,14 +325,18 @@ PrintWriter pw;
         Button btFin = new Button("Fin");
         pane.add(btFin, 6, 5);
         btFin.setOnAction(evt -> {
-            // coder fin
+            
+            
+            
+            
+            
         });
         
         Button btRev = new Button("Choisir revêtement");
         pane.add(btRev, 4, 5);
         btRev.setOnAction(evt -> {
             // Ouvrir une nouvelle fenêtre pour choisir le revêtement
-            RevetementFenetre revetmentWindow = new RevetementFenetre(liste_recs.size(), listeMurs, listePlafonds);
+            RevetementFenetre revetmentWindow = new RevetementFenetre(liste_recs.size(), listeMurs, listePlafonds, listeSols);
 
             revetmentWindow.start(new Stage());
         });
@@ -376,5 +398,4 @@ PrintWriter pw;
 // prix mur haut bas = (prix m2)x(Surface) + prix porte + prix fenetre
 // prix mur droite gauche = (prix m2)x(Surface) + prix porte + prix fenetre
 // prix sol = (prix m2)xsurface + prix trémis
-
 

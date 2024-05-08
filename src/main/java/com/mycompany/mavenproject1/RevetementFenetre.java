@@ -471,11 +471,18 @@ try {
     textField.setText("0");
     return textField;
 }
-    
-    
     private ComboBox<Integer> createComboBox() {
         ComboBox<Integer> comboBox = new ComboBox<>();
         for (int i = 1; i <= 14; i++) {
+            comboBox.getItems().add(i);
+        }
+        comboBox.setValue(1); // Définition de la valeur par défaut
+        return comboBox;
+    }
+    
+    private ComboBox<Integer> createComboBoxMur() {
+        ComboBox<Integer> comboBox = new ComboBox<>();
+        for (int i = 1; i <= 12; i++) {
             comboBox.getItems().add(i);
         }
         comboBox.setValue(1); // Définition de la valeur par défaut
