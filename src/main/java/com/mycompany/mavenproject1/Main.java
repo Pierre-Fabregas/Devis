@@ -164,7 +164,7 @@ listeMurs.add(mur4);
     try { 
         pwcoin= new PrintWriter (new FileOutputStream("coin.txt"));
         for (Coin coin : liste_coins) {
-            pwcoin.println("Coin;" + coin.idcoin + ";" + coin.rectangleId + ";" + coin.coinNumber + ";" + coin.cx + ";" + coin.cy);
+            pwcoin.println("Coin;" + coin.idcoin + ";" + coin.IdPiece + ";" + coin.coinNumber + ";" + coin.cx + ";" + coin.cy);
         }
         pwcoin.close();
         } catch (FileNotFoundException e) {
@@ -174,7 +174,7 @@ listeMurs.add(mur4);
 try { 
     pwmur = new PrintWriter (new FileOutputStream("mur1.txt"));
     for (Mur mur : liste_murs) {
-        pwmur.println("Mur;" + mur.idMur + ";" + mur.rectangleId + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
+        pwmur.println("Mur;" + mur.idMur + ";" + mur.IdPiece + ";" + mur.numero_mur + ";" + mur.nbrePortes + ";" + mur.nbreFenetres + ";" + mur.coinDebut.idcoin + ";" + mur.coinFin.idcoin + ";" + mur.hauteur);
     }
     pwmur.close();
 } catch (FileNotFoundException e) {
@@ -184,7 +184,7 @@ try {
 try { 
     pwplafond = new PrintWriter (new FileOutputStream("plafond1.txt"));
     for (Plafond plafond : liste_plafonds) {
-        pwplafond.println("Plafond;" +  plafond.rectangleId + ";" + plafond.coin1.idcoin + ";" + plafond.coin2.idcoin + ";" + plafond.coin3.idcoin + ";" + plafond.coin4.idcoin + ";" + plafond.listeRevetement + ";" + plafond.tremie );
+        pwplafond.println("Plafond;" +  plafond.IdPiece + ";" + plafond.coin1.idcoin + ";" + plafond.coin2.idcoin + ";" + plafond.coin3.idcoin + ";" + plafond.coin4.idcoin + ";" + plafond.listeRevetement + ";" + plafond.tremie );
     }
     pwplafond.close();
 } catch (FileNotFoundException e) {
